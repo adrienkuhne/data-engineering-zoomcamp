@@ -1,0 +1,34 @@
+dans le yml
+environemnt : 
+ce sont des variables d'environemnt.c'est ce qu'on configure dans le container docker
+on dit ce que le user sera etc...
+Avec docker run il faut l'indiquer avec -e.
+
+
+volume : 
+la ou les data vont être stocker car si on le defini pas,
+si on relance l'image il n'y aura rien
+DU coup création de directory ny_taxi_postgress data
+et creation volume ny_taxi ...
+
+
+Do this to enable read write to this foler
+sudo chmod a+rwx ny_taxi_postgres_data 
+
+docker volume create --name ny_taxi_postgres_data -d local
+
+Ensuite lancer le docker code dans terminal
+
+docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:13
+
+installer pgcli avec pip install pgcli
+
+
+Ensuite afin de se connecter a la db
+pgcli -h localhost -p 5432 -u root -d ny_taxi
